@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>शुभ दीपावली</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(to bottom,#4b0000,#8b0000,#d4af37);
+    font-family:'Georgia',serif;
+    overflow:hidden;
+    transition:1s;
+}
+
+/* MAIN GOLD FRAME */
+.frame{
+    position:absolute;
+    width:96%;
+    height:92%;
+    border:10px double gold;
+    border-radius:20px;
+    box-shadow:0 0 40px gold,inset 0 0 60px orange;
+}
+
+/* CORNER DECOR */
+.corner{
+    position:absolute;
+    font-size:60px;
+}
+.top-left{top:10px;left:20px;}
+.top-right{top:10px;right:20px;}
+.bottom-left{bottom:10px;left:20px;}
+.bottom-right{bottom:10px;right:20px;}
+
+/* START BOX */
+.startBox{
+    text-align:center;
+    color:#fff8dc;
+    z-index:5;
+}
+
+.startBox h1{
+    font-size:50px;
+    text-shadow:0 0 20px gold;
+}
+
+input{
+    margin-top:20px;
+    padding:15px 30px;
+    border-radius:30px;
+    border:none;
+    text-align:center;
+    font-size:18px;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 30px;
+    border-radius:30px;
+    border:none;
+    background:gold;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* GREETING MODE */
+.greeting{
+    text-align:center;
+    color:#fff8dc;
+    z-index:5;
+    animation:fadeIn 2s ease-in-out;
+}
+
+.greeting h2{
+    font-size:60px;
+    text-shadow:0 0 25px gold;
+}
+
+.name{
+    font-size:45px;
+    color:gold;
+    margin:15px 0;
+}
+
+/* RAM IMAGE */
+.ramImg{
+    width:300px;
+    border-radius:15px;
+    box-shadow:0 0 25px gold;
+    margin-top:20px;
+}
+
+/* DIYA ROW */
+.diyaRow{
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    text-align:center;
+    font-size:35px;
+}
+
+/* FLOWER PETALS */
+.petal{
+    position:absolute;
+    font-size:25px;
+    animation:fall 8s linear infinite;
+}
+
+@keyframes fall{
+    from{transform:translateY(-10vh);opacity:1;}
+    to{transform:translateY(110vh);opacity:0;}
+}
+
+/* SPARKLES */
+.spark{
+    position:absolute;
+    width:4px;
+    height:4px;
+    background:gold;
+    border-radius:50%;
+    animation:blink 2s infinite alternate;
+}
+
+@keyframes blink{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="frame"></div>
+
+<!-- Corner Floral -->
+<div class="corner top-left">🌺</div>
+<div class="corner top-right">🌺</div>
+<div class="corner bottom-left">🌺</div>
+<div class="corner bottom-right">🌺</div>
+
+<div class="startBox" id="start">
+    <h1>🕉️ शुभ दीपावली 🕉️</h1>
+    <p>अपना नाम लिखें और आशीर्वाद प्राप्त करें</p>
+    <input type="text" id="username" placeholder="आपका नाम">
+    <br>
+    <button onclick="showGreeting()">आशीर्वाद प्राप्त करें 🙏</button>
+</div>
+
+<script>
+function showGreeting(){
+    var name=document.getElementById("username").value;
+    if(name===""){
+        alert("कृपया अपना नाम लिखें");
+        return;
+    }
+
+    document.getElementById("start").style.display="none";
+
+    var greet=document.createElement("div");
+    greet.className="greeting";
+    greet.innerHTML=
+        "<h2>✨ शुभ दीपावली ✨</h2>"+
+        "<div class='name'>"+name+" जी को हार्दिक शुभकामनाएं</div>"+
+        "<img class='ramImg' src='https://upload.wikimedia.org/wikipedia/commons/4/4c/Lord_Rama_with_bow_and_arrow.jpg'>"+
+        "<p style='margin-top:15px;font-size:22px;'>भगवान श्री राम आपके जीवन में सुख, शांति और समृद्धि का प्रकाश फैलाएं।</p>";
+
+    document.body.appendChild(greet);
+
+    /* DIYA ROW */
+    var diyaRow=document.createElement("div");
+    diyaRow.className="diyaRow";
+    diyaRow.innerHTML="🪔 🪔 🪔 🪔 🪔 🪔 🪔 🪔 🪔 🪔";
+    document.body.appendChild(diyaRow);
+
+    /* FLOWER PETALS */
+    setInterval(()=>{
+        let petal=document.createElement("div");
+        petal.className="petal";
+        petal.innerHTML="🌸";
+        petal.style.left=Math.random()*100+"vw";
+        document.body.appendChild(petal);
+        setTimeout(()=>petal.remove(),8000);
+    },500);
+
+    /* SPARKLES */
+    for(let i=0;i<80;i++){
+        let spark=document.createElement("div");
+        spark.className="spark";
+        spark.style.left=Math.random()*100+"vw";
+        spark.style.top=Math.random()*100+"vh";
+        document.body.appendChild(spark);
+    }
+}
+</script>
+
+</body>
+</html>
