@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<title>शुभ होली</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Georgia,serif;}
+
+body{
+    min-height:100vh;
+    text-align:center;
+    color:white;
+    overflow-x:hidden;
+    background:linear-gradient(-45deg,#ff0080,#ff8c00,#40e0d0,#ffeb3b,#8e24aa);
+    background-size:400% 400%;
+    animation:gradientFlow 10s ease infinite;
+    position:relative;
+}
+
+@keyframes gradientFlow{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Decorative Border */
+.frame{
+    position:fixed;
+    top:2%;
+    left:2%;
+    width:96%;
+    height:96%;
+    border:6px double white;
+    border-radius:20px;
+    box-shadow:0 0 40px white;
+    pointer-events:none;
+}
+
+/* Toran */
+.toran{
+    font-size:28px;
+    margin-top:10px;
+}
+
+/* Main Box */
+.container{
+    padding:60px 20px;
+}
+
+h1{
+    font-size:55px;
+    text-shadow:0 0 20px white;
+}
+
+input{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:25px;
+    margin-top:20px;
+    text-align:center;
+}
+
+button{
+    padding:10px 25px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#ffd54f;
+}
+
+/* Greeting */
+.greeting{
+    margin-top:40px;
+    animation:fade 2s ease-in-out;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.name{
+    font-size:35px;
+    margin:15px 0;
+}
+
+/* Krishna */
+.krishna{
+    width:260px;
+    margin-top:20px;
+    border-radius:15px;
+    box-shadow:0 0 25px white;
+}
+
+/* Bottom Color Row */
+.colorRow{
+    position:fixed;
+    bottom:15px;
+    width:100%;
+    font-size:35px;
+}
+
+/* Petals */
+.petal{
+    position:fixed;
+    top:-20px;
+    font-size:22px;
+    animation:fall 7s linear forwards;
+}
+
+@keyframes fall{
+    to{transform:translateY(110vh);}
+}
+
+/* Spark Particles */
+.spark{
+    position:fixed;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    animation:blink 2s infinite alternate;
+}
+
+@keyframes blink{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+/* Gulal Side Decoration */
+.gulal{
+    position:fixed;
+    bottom:50px;
+    font-size:45px;
+}
+.leftGulal{left:20px;}
+.rightGulal{right:20px;}
+</style>
+</head>
+
+<body>
+
+<div class="frame"></div>
+
+<div class="toran">🌿🌸🌿🌸🌿🌸🌿🌸🌿🌸🌿</div>
+
+<div class="container" id="mainBox">
+    <h1>🎨 शुभ होली 🎨</h1>
+    <p>अपना नाम लिखें और रंगों का आशीर्वाद पाएं</p>
+
+    <input type="text" id="username" placeholder="Your Name">
+    <br>
+    <button onclick="generateGreeting()">शुभकामनाएं भेजें</button>
+</div>
+
+<div class="gulal leftGulal">🎨🌈</div>
+<div class="gulal rightGulal">🌈🎨</div>
+
+<script>
+function generateGreeting(){
+
+    var name=document.getElementById("username").value.trim();
+    if(name===""){
+        alert("Please enter your name");
+        return;
+    }
+
+    name=name.charAt(0).toUpperCase()+name.slice(1);
+
+    var box=document.getElementById("mainBox");
+
+    box.innerHTML=
+        "<div class='greeting'>"+
+        "<h1>🌈 शुभ होली 🌈</h1>"+
+        "<div class='name'>प्रिय "+name+" जी,</div>"+
+        "<p style='font-size:22px;'>"+
+        "आपको और आपके परिवार को रंगों की हार्दिक शुभकामनाएं।<br>"+
+        "भगवान श्री कृष्ण आपके जीवन में प्रेम, आनंद और खुशियां भर दें।"+
+        "</p>"+
+        "<img class='krishna' src='https://upload.wikimedia.org/wikipedia/commons/3/3e/Krishna_with_flute.jpg'>"+
+        "</div>";
+
+    startEffects();
+}
+
+function startEffects(){
+
+    // Petal Shower
+    setInterval(function(){
+        var petal=document.createElement("div");
+        petal.className="petal";
+        petal.innerHTML="🌸";
+        petal.style.left=Math.random()*100+"vw";
+        document.body.appendChild(petal);
+        setTimeout(()=>petal.remove(),7000);
+    },300);
+
+    // Spark Particles
+    for(let i=0;i<80;i++){
+        let spark=document.createElement("div");
+        spark.className="spark";
+        spark.style.left=Math.random()*100+"vw";
+        spark.style.top=Math.random()*100+"vh";
+        spark.style.background="hsl("+Math.random()*360+",100%,50%)";
+        document.body.appendChild(spark);
+    }
+
+    // Bottom Color Row
+    var row=document.createElement("div");
+    row.className="colorRow";
+    row.innerHTML="🎨 🌈 🎨 🌈 🎨 🌈 🎨 🌈 🎨 🌈 🎨";
+    document.body.appendChild(row);
+}
+</script>
+
+</body>
+</html>
