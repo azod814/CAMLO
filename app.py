@@ -20,11 +20,7 @@ def festival(name):
         return render_template(f"festivals/{name.lower()}.html")
     return "Festival not found", 404
 
-@app.route("/meeting/<name>")
-def meeting(name):
-    if name.lower() in MEETINGS:
-        return render_template(f"meetings/{name.lower().replace(' ', '_')}.html")
-    return "Meeting not found", 404
+
 
 @app.route("/submit", methods=["POST"])
 def submit():
