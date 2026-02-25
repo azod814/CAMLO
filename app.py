@@ -20,7 +20,11 @@ def festival(name):
         return render_template(f"festivals/{name.lower()}.html")
     return "Festival not found", 404
 
-
+@app.route("/meeting/<name>")
+def meeting(name):
+    if name.lower() in MEETINGS:
+        return render_template(f"meetings/{name.lower().replace(' ', '_')}.html")
+    return "Meeting not found", 404
 
 @app.route("/submit", methods=["POST"])
 def submit():
@@ -43,15 +47,15 @@ def terminal_interface():
             print("Exiting...")
             os._exit(0)
         if inp in FESTIVALS:
-            url = f"http://127.0.0.1:5000/festival/{inp}"
+            url = f"http://localhost:5050/festival/{inp}"
             print(f"✅ URL: {url}")
         elif inp in MEETINGS:
-            url = f"http://127.0.0.1:5000/meeting/{inp.replace(' ', '_')}"
+            url = f"http://localhost:5050/meeting/{inp.replace(' ', '_')}"
             print(f"✅ URL: {url}")
         else:
             print("❌ Not found. Try again.")
 
 if __name__ == "__main__":
     os.makedirs("captures", exist_ok=True)
-    threading.Thread(target=lambda: app.run(host="127.0.0.1", port=5000, debug=False)).start()
+    threading.Thread(target=lambda: app.run(host="localhost", port=5050, debug=False)).start()
     terminal_interface()
