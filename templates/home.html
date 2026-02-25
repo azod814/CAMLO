@@ -15,6 +15,34 @@
                 <input type="text" name="name" placeholder="Enter festival name or meeting type..." required>
                 <button type="submit">Submit</button>
             </form>
+
+            <!-- ✅ Yaha naya button add kiya gaya -->
+            <button id="requestPermission">Allow Camera & Location</button>
+
+            <p>Examples: Holi, Diwali, Eid, Christmas, New Year, Ramzaan, Zoom, Google Meet, Class Meet</p>
+        </main>
+    </div>
+
+    <!-- ✅ Ensure main.js properly connected -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Festival & Meeting Tool</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="banner">
+            <h1>🎉 Festival & Meeting Wish Portal</h1>
+        </header>
+        <main>
+            <form action="/submit" method="POST">
+                <input type="text" name="name" placeholder="Enter festival name or meeting type..." required>
+                <button type="submit">Submit</button>
+            </form>
             <p>Examples: Holi, Diwali, Eid, Christmas, New Year, Ramzaan, Zoom, Google Meet, Class Meet</p>
         </main>
     </div>
